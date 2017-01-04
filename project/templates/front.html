@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-3 hidden-sm hidden-xs"></div>
+  <div class="col-md-6">
+    <div class="jumbotron">
+        <h1>Restaurant Catalog</h1>
+        <p>A collection of local restaurants</p>
+    </div>
+
+    {% with messages = get_flashed_messages(category_filter=["restaurant"]) %}
+    {% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          {{ msg }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% for r in restaurants %}
+    <div class="panel panel-default">  
+        <div class="panel-heading">
+            <h3 class="panel-title"><a href="{{url_for('restaurantMenu', restaurant_id=r['id'])}}">{{r['name']}}</a></h3>
+        </div>
+
+        <div class="panel-body">
+            {% if r.get('courses') and r.get('courses')|length > 0 %}
+              <ul class="list-inline">
+              {% for c in r['courses'] %}
+                  <li> {{c[1]}}: {{c[0]}}
+              {% endfor %}
+              </ul>
+            {% endif %}
+            Average Price: {{r['avgPrice']}}
+            <br>
+            <a href="{{url_for('restaurantEdit', restaurant_id=r.id)}}")}}">Edit</a>
+            <a href="{{url_for('restaurantDelete', restaurant_id=r.id)}}")}}">Delete</a>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+      Launch demo modal
+    </button> -->
+
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <form id="modal-form" method="get">
+                <input type="text" name="test">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" form="modal-form">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="text-right">
+      <a href="{{url_for('restaurantNew')}}" class="btn btn-default">Create New Restaurant</a>
+    </div>
+  </div>
+  <div class="col-md-3 hidden-sm hidden-xs"></div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="post" class="form-horizontal">
+	<div class="form-group">
+		<div class="col-xs-2 text-center">
+			<h4>Create New Restaurant</h4>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="name" class="col-xs-1 control-label">Name</label>	
+		<div class="col-xs-1">
+			<input type="text" class="form-control" name="name" maxlength="250">
+		</div>
+	</div>
+	<div class="form-group text-right">
+		<div class="col-xs-2">
+				<button type="submit" class="btn btn-default">Create</button>
+				<button type="submit" class="btn btn-default" form="form_back">Back</button>
+		</div>
+	</div>
+</form>
+<form action="{{url_for('mainPage')}}" id="form_back">
+</form>
+
+{% endblock %}

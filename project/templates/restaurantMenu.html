@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<ol class="breadcrumb">
+  <li><a href="{{url_for('mainPage')}}">Catalog</a></li>
+  <li class="active">{{restaurant.name}}</li>
+</ol>
+
+
+<div class="page-header">
+	<h2> {{restaurant.name}} </h2>
+</div>
+
+<div class="row">
+	<div class="col-md-3 hidden-sm hidden-xs">
+		<ul class="nav nav-pills nav-stacked" role="tablist">
+  			<li role="presentation">
+  				<a href="#appetizer">Appetizer 
+  					{% if menuItems.get('Appetizer') and menuItems.get('Appetizer')|length > 0 %}
+  						<span class="badge">{{menuItems.get('Appetizer')|length}}</span>
+  					{% endif %}
+  				</a>
+			</li>
+  			<li role="presentation">
+  				<a href="#entree">Entree 
+  					{% if menuItems.get('Entree') and menuItems.get('Entree')|length > 0 %}
+  						<span class="badge">{{menuItems.get('Entree')|length}}</span>
+  					{% endif %}
+  				</a>
+			</li>
+  			<li role="presentation">
+  				<a href="#dessert">Dessert 
+  					{% if menuItems.get('Dessert') and menuItems.get('Dessert')|length > 0 %}
+  						<span class="badge">{{menuItems.get('Dessert')|length}}</span>
+  					{% endif %}
+  				</a>
+			</li>
+  			<li role="presentation">
+  				<a href="#beverage">Beverage 
+  					{% if menuItems.get('Beverage') and menuItems.get('Beverage')|length > 0 %}
+  						<span class="badge">{{menuItems.get('Beverage')|length}}</span>
+  					{% endif %}
+  				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-6">
+		{% with messages = get_flashed_messages(category_filter=["menu"]) %}
+		{% if messages %}
+		    {% for msg in messages %}
+		    <div class="alert alert-success alert-dismissible" role="alert">
+		      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		      {{ msg }}
+		    </div>
+		    {% endfor %}
+		{% endif %}
+		{% endwith %}
+
+		{% if menuItems.get("Appetizer") %}
+			<h3 id="appetizer" class="text-center">Appetizer</h3>
+			{% for menu in menuItems.get('Appetizer') %}
+				<div class="row">
+					<div class="col-md-9"><h4>{{menu.name}}</h4></div>
+					<div class="col-md-3 text-right">&#36;{{menu.price}}</div>
+					<div class="col-md-12">
+						{{menu.description}} <br>
+						<a href="{{url_for('restaurantMenuItemEdit', restaurant_id=restaurant.id, menu_id=menu.id)}}">Edit</a>
+						<a href="{{url_for('restaurantMenuItemDelete', restaurant_id=restaurant.id, menu_id=menu.id)}}">Delete</a>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+
+		{% if menuItems.get('Entree') %}
+			<h3 id="entree" class="text-center">Entree</h3>
+			{% for menu in menuItems.get('Entree') %}
+				<div class="row">
+					<div class="col-md-9"><h4>{{menu.name}}</h4></div>
+					<div class="col-md-3 text-right">&#36;{{menu.price}}</div>
+					<div class="col-md-12">
+						{{menu.description}} <br>
+						<a href="{{url_for('restaurantMenuItemEdit', restaurant_id=restaurant.id, menu_id=menu.id)}}">Edit</a>
+						<a href="{{url_for('restaurantMenuItemDelete', restaurant_id=restaurant.id, menu_id=menu.id)}}">Delete</a>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+
+		{% if menuItems.get('Dessert') %}
+			<h3 id="dessert" class="text-center">Dessert</h3>
+			{% for menu in menuItems.get('Dessert') %}
+				<div class="row">
+					<div class="col-md-9"><h4>{{menu.name}}</h4></div>
+					<div class="col-md-3 text-right">&#36;{{menu.price}}</div>
+					<div class="col-md-12">
+						{{menu.description}} <br>
+						<a href="{{url_for('restaurantMenuItemEdit', restaurant_id=restaurant.id, menu_id=menu.id)}}">Edit</a>
+						<a href="{{url_for('restaurantMenuItemDelete', restaurant_id=restaurant.id, menu_id=menu.id)}}">Delete</a>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+
+		{% if menuItems.get('Beverage') %}
+			<h3 id="beverage" class="text-center">Beverage</h3>
+			{% for menu in menuItems.get('Beverage') %}
+				<div class="row">
+					<div class="col-md-9"><h4>{{menu.name}}</h4></div>
+					<div class="col-md-3 text-right">&#36;{{menu.price}}</div>
+					<div class="col-md-12">
+						{{menu.description}} <br>
+						<a href="{{url_for('restaurantMenuItemEdit', restaurant_id=restaurant.id, menu_id=menu.id)}}">Edit</a>
+						<a href="{{url_for('restaurantMenuItemDelete', restaurant_id=restaurant.id, menu_id=menu.id)}}">Delete</a>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+
+		<br>
+		<div class="text-right">	
+			<a href="{{url_for('restaurantMenuItemNew', restaurant_id=restaurant.id)}}" class="btn btn-default">Create New Menu</a>
+		</div>
+	</div>
+
+	<div class="col-md-3 hidden-sm hidden-xs">
+	</div>
+</div>
+
+
+
+
+{% endblock %}

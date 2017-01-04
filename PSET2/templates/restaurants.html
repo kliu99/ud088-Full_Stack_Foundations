@@ -1,0 +1,9 @@
+<h2> List of all restaurants</h2>
+
+<hr>
+
+{% for r in restaurants %}
+	<h4>{{r.name}}</h4>
+	<a href="{{r.key().id()}}/edit">Edit</a><br>
+	<a href="{{r.key().id()}}/delete">Delete</a><br><br>
+{% endfor %}
